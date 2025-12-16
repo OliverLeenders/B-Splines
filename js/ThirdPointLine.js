@@ -31,8 +31,8 @@ class ThirdPointLine {
             (this.startPoint.y + 2 * this.endPoint.y) / 3
         );
 
-        this.thirdPoint_a.drawPoint(thirdPoint_group, 4, "lightsteelblue");
-        this.thirdPoint_b.drawPoint(thirdPoint_group, 4, "lightsteelblue");
+        this.thirdPoint_a.drawPoint(thirdPoint_group, 3, "darkgray");
+        this.thirdPoint_b.drawPoint(thirdPoint_group, 3, "darkgray");
 
         return line;
     }

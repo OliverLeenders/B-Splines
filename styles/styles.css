@@ -12,4 +12,9 @@ svg {
 
 .points * {
     cursor: pointer;
+    transition: r 0.1s;
+}
+
+.points *:hover {
+    r: 10px;
 }

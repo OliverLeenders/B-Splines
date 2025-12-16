@@ -20,16 +20,16 @@ class BezierSegment {
         this.pathObj = path;
 
         this.c0Obj = new Point(this.c0.x, this.c0.y);
-        this.c0Obj.drawPoint(UIGroup, 4, "lightcoral");
+        this.c0Obj.drawPoint(UIGroup, 3, "darkgray");
 
-        this.c0LineObj = new Line(this.p0, this.c0);
-        this.c0LineObj.drawLine(UIGroup, "lightcoral");
+        this.c0LineObj = new Line(this.p0, this.c0, true);
+        this.c0LineObj.drawLine(UIGroup, "darkgray");
 
         this.c1Obj = new Point(this.c1.x, this.c1.y);
-        this.c1Obj.drawPoint(UIGroup, 4, "lightcoral");
+        this.c1Obj.drawPoint(UIGroup, 3, "darkgray");
 
-        this.c1LineObj = new Line(this.c1, this.p1);
-        this.c1LineObj.drawLine(UIGroup, "lightcoral");
+        this.c1LineObj = new Line(this.c1, this.p1, true);
+        this.c1LineObj.drawLine(UIGroup, "darkgray");
 
         return path;
     }

@@ -2,9 +2,9 @@ const svg = d3.select("svg");
 
 const line_group = svg.append("g").attr("class", "lines");
 const bezier_ui_group = svg.append("g").attr("class", "bezierUI");
-const point_group = svg.append("g").attr("class", "points");
-const b_spline_group = svg.append("g").attr("class", "bSplines");
 const node_group = svg.append("g").attr("class", "nodes");
+const b_spline_group = svg.append("g").attr("class", "bSplines");
+const point_group = svg.append("g").attr("class", "points");
 const thirdPoint_group = svg.append("g").attr("class", "thirdPoints");
 
 
@@ -53,7 +53,7 @@ svg.on("dblclick", function (event) {
 
                 // Remove incident lines from the lines array by comparing point objects
                 lines.splice(Math.max(0, index - 1), Math.min(2, lines.length - Math.max(0, index - 1)));
-                
+
 
                 // draw new line between adjacent points if applicable
                 if (index > 0 && index < points.length) {
