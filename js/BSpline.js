@@ -62,22 +62,26 @@ class BSpline {
             return;
         }
 
-        let firstEndPoint = Point.middlePoint(this.lines[0].thirdPoint_b, this.lines[1].thirdPoint_a);
+        // 1. Update the first node (Node 0)
+        let firstNodePos = Point.middlePoint(this.lines[0].thirdPoint_b, this.lines[1].thirdPoint_a);
+        this.nodes[0].updatePosition(firstNodePos.x, firstNodePos.y);
+
+        // 2. Update the first segment (ends at Node 0)
         this.splineSegments[0].updateBezier(
             this.controlPoints[0],
             this.controlPoints[0],
             this.lines[0].thirdPoint_b,
-            firstEndPoint
+            this.nodes[0] // Use persistent node object
         );
 
-        let startPoint = Point.middlePoint(this.lines[0].thirdPoint_b, this.lines[1].thirdPoint_a);
-        this.nodes[0].updatePosition(startPoint.x, startPoint.y);
-
+        // 3. Loop through remaining segments
         this.splineSegments.forEach((segment, i) => {
             if (i < 1) return; // skip first segment
+
+            // Handle Last Segment
             if (i == this.splineSegments.length - 1) {
-                // last segment
                 let lastEndPoint = this.controlPoints[this.controlPoints.length - 1];
+                // Starts at the last node
                 segment.updateBezier(
                     this.nodes[this.nodes.length - 1],
                     this.lines[this.lines.length - 1].thirdPoint_a,
@@ -87,16 +91,21 @@ class BSpline {
                 return;
             }
 
+            // Handle Middle Segments
             let lineIndex = i;
-            // Guard against array bounds if lines were removed
+            // Guard against array bounds
             if (lineIndex > this.lines.length - 2) return;
 
             let c0 = this.lines[lineIndex].thirdPoint_a;
             let c1 = this.lines[lineIndex].thirdPoint_b;
-            let endPoint = Point.middlePoint(this.lines[lineIndex].thirdPoint_b, this.lines[lineIndex + 1].thirdPoint_a);
-            this.nodes[lineIndex].updatePosition(endPoint.x, endPoint.y);
-            segment.updateBezier(startPoint, c0, c1, endPoint);
-            startPoint = endPoint;
+            
+            // Calculate new position for Node i
+            let nodePos = Point.middlePoint(this.lines[lineIndex].thirdPoint_b, this.lines[lineIndex + 1].thirdPoint_a);
+            this.nodes[lineIndex].updatePosition(nodePos.x, nodePos.y);
+
+            // Update segment using persistent node objects
+            // Start: Node i-1, End: Node i
+            segment.updateBezier(this.nodes[lineIndex - 1], c0, c1, this.nodes[lineIndex]);
         });
     }
 
